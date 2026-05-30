@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cristian Caffer — Inmobiliaria Balnearia</title>
+  <meta name="description" content="Agencia inmobiliaria en Balnearia, Córdoba. Compra, venta y alquiler de propiedades con más de 15 años de experiencia." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ═══ LOADER ═══ -->
+  <div id="loader">
+    <div class="loader-logo">CC</div>
+    <div class="loader-bar"><div class="loader-fill"></div></div>
+  </div>
+
+  <!-- ═══ CURSOR ═══ -->
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
+
+  <!-- ═══ NAVBAR ═══ -->
+  <header id="navbar">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <span class="logo-mark">CC</span>
+        <span class="logo-text">Cristian Caffer</span>
+      </a>
+      <nav class="nav-links">
+        <a href="#propiedades">Propiedades</a>
+        <a href="#nosotros">Nosotros</a>
+        <a href="#proceso">Proceso</a>
+        <a href="#testimonios">Testimonios</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+      <div class="nav-actions">
+        <a href="tel:035634330290" class="btn-call">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.5 3.18 2 2 0 012.18 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.15a16 16 0 006.29 6.29l1.42-1.42a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          Llamar
+        </a>
+        <button class="btn-nav-cta" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'})">Consultar gratis</button>
+        <button class="hamburger" id="hamburger" aria-label="Menú">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <!-- Mobile menu -->
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="#propiedades" class="mm-link">Propiedades</a>
+      <a href="#nosotros" class="mm-link">Nosotros</a>
+      <a href="#proceso" class="mm-link">Proceso</a>
+      <a href="#testimonios" class="mm-link">Testimonios</a>
+      <a href="#contacto" class="mm-link">Contacto</a>
+    </div>
+  </header>
+
+  <!-- ═══ HERO ═══ -->
+  <section id="hero">
+    <div class="hero-bg-wrap">
+      <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1600&q=85" alt="" class="hero-bg-img" id="hero-bg" />
+      <div class="hero-overlay"></div>
+      <div class="hero-gradient"></div>
+    </div>
+
+    <div class="hero-content">
+      <div class="hero-badge reveal-up">Balnearia, Córdoba · Est. 2009</div>
+      <h1 class="hero-h1 reveal-up" style="--d:.1s">
+        Encontrá el hogar<br>
+        <em>que siempre soñaste</em>
+      </h1>
+      <p class="hero-sub reveal-up" style="--d:.2s">
+        Más de 15 años conectando familias con su propiedad ideal.<br>
+        Compra, venta y alquiler en Balnearia y la región.
+      </p>
+
+    </div>
+
+    <!-- Stats ticker -->
+    <div class="hero-stats reveal-up" style="--d:.45s">
+      <div class="hs-stat">
+        <span class="hs-n" data-count="320">0</span><span>+</span>
+        <div class="hs-l">Familias asesoradas</div>
+      </div>
+      <div class="hs-divider"></div>
+      <div class="hs-stat">
+        <span class="hs-n" id="stat-props">0</span>
+        <div class="hs-l">Propiedades activas</div>
+      </div>
+      <div class="hs-divider"></div>
+      <div class="hs-stat">
+        <span class="hs-n" data-count="15">0</span><span>+</span>
+        <div class="hs-l">Años de experiencia</div>
+      </div>
+      <div class="hs-divider"></div>
+      <div class="hs-stat">
+        <span class="hs-n" data-count="98">0</span><span>%</span>
+        <div class="hs-l">Clientes satisfechos</div>
+      </div>
+    </div>
+
+    <div class="hero-scroll-hint">
+      <span>Explorá</span>
+      <div class="scroll-line-anim"></div>
+    </div>
+  </section>
+
+  <!-- ═══ FEATURED BAND ═══ -->
+  <div class="featured-band">
+    <div class="band-track" aria-hidden="true">
+      <span>Propiedades en venta</span><div class="band-dot"></div>
+      <span>Terrenos disponibles</span><div class="band-dot"></div>
+      <span>Alquileres</span><div class="band-dot"></div>
+      <span>Balnearia · Córdoba</span><div class="band-dot"></div>
+      <span>15 años de trayectoria</span><div class="band-dot"></div>
+      <span>Tasaciones gratuitas</span><div class="band-dot"></div>
+      <span>Asesoramiento personalizado</span><div class="band-dot"></div>
+    </div>
+    <div class="band-track" aria-hidden="true">
+      <span>Propiedades en venta</span><div class="band-dot"></div>
+      <span>Terrenos disponibles</span><div class="band-dot"></div>
+      <span>Alquileres</span><div class="band-dot"></div>
+      <span>Balnearia · Córdoba</span><div class="band-dot"></div>
+      <span>15 años de trayectoria</span><div class="band-dot"></div>
+      <span>Tasaciones gratuitas</span><div class="band-dot"></div>
+      <span>Asesoramiento personalizado</span><div class="band-dot"></div>
+    </div>
+  </div>
+
+  <!-- ═══ PROPIEDADES ═══ -->
+  <section id="propiedades">
+    <div class="section-intro reveal-up">
+      <div class="section-eyebrow">Catálogo</div>
+      <h2 class="section-title">Propiedades <em>destacadas</em></h2>
+      <p class="section-sub">Explorá nuestra cartera actualizada. Cada propiedad es única y está seleccionada por nuestro equipo.</p>
+    </div>
+
+    <!-- Filter bar -->
+    <div class="prop-filter-bar reveal-up" style="--d:.1s">
+      <button class="pf-btn active" data-filter="all">
+        <span class="pf-dot all"></span> Todos
+      </button>
+      <button class="pf-btn" data-filter="venta">
+        <span class="pf-dot venta"></span> Venta
+      </button>
+      <button class="pf-btn" data-filter="alquiler">
+        <span class="pf-dot alquiler"></span> Alquiler
+      </button>
+      <button class="pf-btn" data-filter="terreno">
+        <span class="pf-dot terreno"></span> Terrenos
+      </button>
+      <div class="pf-count" id="pf-count">— propiedades</div>
+    </div>
+
+    <!-- Grid -->
+    <div class="props-grid" id="props-grid">
+      <!-- Rendered by JS -->
+    </div>
+
+    <div class="props-empty hidden" id="props-empty">
+      <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <p>No hay propiedades en esta categoría.</p>
+    </div>
+  </section>
+
+  <!-- ═══ CTA BAND ═══ -->
+  <div class="cta-band reveal-up">
+    <div class="cta-band-content">
+      <div>
+        <h3>¿Querés tasar tu propiedad?</h3>
+        <p>Servicio gratuito, sin compromiso. Te contactamos en menos de 24 hs.</p>
+      </div>
+      <a href="#contacto" class="btn-primary-gold" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'});return false;">
+        Solicitar tasación gratis
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- ═══ NOSOTROS ═══ -->
+  <section id="nosotros">
+    <div class="about-grid">
+      <div class="about-visual reveal-up">
+        <div class="about-img-main">
+          <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=700&q=80" alt="Cristian Caffer" loading="lazy" />
+          <div class="about-img-badge">
+            <span class="aib-n">15+</span>
+            <span class="aib-l">Años</span>
+          </div>
+        </div>
+        <div class="about-img-secondary">
+          <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=400&q=80" alt="Propiedad Balnearia" loading="lazy" />
+        </div>
+        <div class="about-accent-card">
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <span>Calidad garantizada</span>
+        </div>
+      </div>
+
+      <div class="about-text reveal-up" style="--d:.15s">
+        <div class="section-eyebrow">Sobre nosotros</div>
+        <h2 class="section-title">Una agencia familiar con <em>raíces en Balnearia</em></h2>
+        <p>Somos Cristian Caffer Inmobiliaria, una agencia familiar con más de 15 años de experiencia en el mercado inmobiliario de Balnearia y la región. Nuestro compromiso es conectar a cada persona con la propiedad que realmente necesita.</p>
+        <p>Conocemos cada calle, cada barrio y el potencial de cada zona. Eso nos permite brindarte un asesoramiento honesto, personalizado y eficiente.</p>
+
+        <div class="about-features">
+          <div class="about-feature">
+            <div class="af-icon">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+            </div>
+            <div>
+              <strong>Atención personalizada</strong>
+              <p>Cada cliente tiene un asesor dedicado durante todo el proceso.</p>
+            </div>
+          </div>
+          <div class="about-feature">
+            <div class="af-icon">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div>
+              <strong>Operaciones seguras</strong>
+              <p>Documentación y legales revisados por nuestro equipo especializado.</p>
+            </div>
+          </div>
+          <div class="about-feature">
+            <div class="af-icon">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            </div>
+            <div>
+              <strong>Respuesta rápida</strong>
+              <p>Te respondemos en menos de 24 horas ante cualquier consulta.</p>
+            </div>
+          </div>
+          <div class="about-feature">
+            <div class="af-icon">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+            </div>
+            <div>
+              <strong>Tasación gratuita</strong>
+              <p>Conocé el valor real de tu propiedad sin costo ni compromiso.</p>
+            </div>
+          </div>
+        </div>
+
+        <a href="#contacto" class="btn-primary-dark" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'});return false;">
+          Conocé más sobre nosotros
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PROCESO ═══ -->
+  <section id="proceso" class="section-dark">
+    <div class="section-intro reveal-up">
+      <div class="section-eyebrow light">Metodología</div>
+      <h2 class="section-title light">Un proceso <em>simple</em> y transparente</h2>
+      <p class="section-sub light">Desde la primera consulta hasta las llaves en tu mano. Sin sorpresas.</p>
+    </div>
+
+    <div class="process-timeline reveal-up" style="--d:.1s">
+      <div class="pt-step">
+        <div class="pt-num">01</div>
+        <div class="pt-connector"></div>
+        <div class="pt-content">
+          <div class="pt-icon">
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          </div>
+          <h3>Consulta inicial</h3>
+          <p>Nos reunimos para entender tus necesidades, presupuesto y tiempos. Sin compromiso ni costo.</p>
+        </div>
+      </div>
+      <div class="pt-step">
+        <div class="pt-num">02</div>
+        <div class="pt-connector"></div>
+        <div class="pt-content">
+          <div class="pt-icon">
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <h3>Selección de propiedades</h3>
+          <p>Filtramos nuestra cartera y te presentamos las propiedades que mejor se ajustan a tu perfil.</p>
+        </div>
+      </div>
+      <div class="pt-step">
+        <div class="pt-num">03</div>
+        <div class="pt-connector"></div>
+        <div class="pt-content">
+          <div class="pt-icon">
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          </div>
+          <h3>Visitas presenciales</h3>
+          <p>Te acompañamos a cada visita con información honesta y sin presiones. Tu tiempo vale.</p>
+        </div>
+      </div>
+      <div class="pt-step">
+        <div class="pt-num">04</div>
+        <div class="pt-content">
+          <div class="pt-icon">
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <h3>Cierre y entrega</h3>
+          <p>Gestionamos escrituras, documentación y acompañamos la firma hasta que tengas las llaves.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TESTIMONIOS ═══ -->
+  <section id="testimonios">
+    <div class="section-intro reveal-up">
+      <div class="section-eyebrow">Testimonios</div>
+      <h2 class="section-title">Lo que dicen <em>nuestros clientes</em></h2>
+    </div>
+
+    <div class="testi-grid reveal-up" style="--d:.1s">
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"Cristian nos ayudó a encontrar la casa que siempre quisimos. Proceso rápido, transparente y sin vueltas. Los recomiendo de corazón a toda la familia."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">MG</div>
+          <div>
+            <strong>María González</strong>
+            <span>Compradora — 2024</span>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card featured">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"Vendí mi casa en tiempo récord y a un precio justo. El equipo de Cristian Caffer conoce el mercado de Balnearia como nadie. Excelente experiencia de principio a fin."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">RF</div>
+          <div>
+            <strong>Roberto Fernández</strong>
+            <span>Vendedor — 2023</span>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"Alquilamos nuestro local comercial gracias a ellos. Súper profesionales y atentos. Siempre disponibles para responder consultas. Sin duda los mejores de la zona."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">LP</div>
+          <div>
+            <strong>Laura Pérez</strong>
+            <span>Arrendataria — 2024</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Google-style rating -->
+    <div class="rating-block reveal-up" style="--d:.2s">
+      <div class="rating-score">4.9</div>
+      <div class="rating-info">
+        <div class="rating-stars">★★★★★</div>
+        <div class="rating-text">Basado en <strong>47 reseñas</strong> de Google</div>
+      </div>
+      <a href="https://maps.google.com" target="_blank" class="rating-link">Ver reseñas en Google</a>
+    </div>
+  </section>
+
+  <!-- ═══ CONTACTO ═══ -->
+  <section id="contacto" class="section-dark">
+    <div class="contact-wrapper">
+      <div class="contact-left reveal-up">
+        <div class="section-eyebrow light">Contacto</div>
+        <h2 class="section-title light">Hablemos <em>hoy</em></h2>
+        <p class="section-sub light">Completá el formulario y nos ponemos en contacto en menos de 24 horas. Sin compromiso.</p>
+
+        <div class="contact-details">
+          <a href="https://maps.google.com/?q=Mar+Chiquita+196+Balnearia+Cordoba" target="_blank" class="cd-item">
+            <div class="cd-icon">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div>
+              <span class="cd-label">Dirección</span>
+              <span class="cd-value">Mar Chiquita 196, Balnearia, Córdoba</span>
+            </div>
+          </a>
+          <a href="tel:035634330290" class="cd-item">
+            <div class="cd-icon">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.5 3.18 2 2 0 012.18 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.15a16 16 0 006.29 6.29l1.42-1.42a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            </div>
+            <div>
+              <span class="cd-label">Teléfono</span>
+              <span class="cd-value">03563 43-0290</span>
+            </div>
+          </a>
+          <a href="/cdn-cgi/l/email-protection#a0c9cec6cfe0c3d2c9d3d4c9c1cec3c1c6c6c5d28ec3cfcd8ec1d2" class="cd-item">
+            <div class="cd-icon">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 7L2 7"/></svg>
+            </div>
+            <div>
+              <span class="cd-label">Email</span>
+              <span class="cd-value"><span class="__cf_email__" data-cfemail="274e4941486744554e54534e46494446414142550944484a094655">[email&#160;protected]</span></span>
+            </div>
+          </a>
+          <div class="cd-item">
+            <div class="cd-icon">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            </div>
+            <div>
+              <span class="cd-label">Horario</span>
+              <span class="cd-value">Lun – Vie: 8:00 – 18:00 · Sáb: 9:00 – 13:00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form-card reveal-up" style="--d:.15s">
+        <form id="contact-form">
+          <div class="cf-row">
+            <div class="cf-field">
+              <label>Nombre completo *</label>
+              <input type="text" placeholder="Tu nombre" required />
+            </div>
+            <div class="cf-field">
+              <label>Teléfono</label>
+              <input type="tel" placeholder="+54 3563 ..." />
+            </div>
+          </div>
+          <div class="cf-field">
+            <label>Email *</label>
+            <input type="email" placeholder="tu@email.com" required />
+          </div>
+          <div class="cf-row">
+            <div class="cf-field">
+              <label>Motivo de consulta</label>
+              <select>
+                <option value="">— Seleccioná —</option>
+                <option>Quiero comprar una propiedad</option>
+                <option>Quiero alquilar una propiedad</option>
+                <option>Quiero vender mi propiedad</option>
+                <option>Necesito una tasación</option>
+                <option>Otra consulta</option>
+              </select>
+            </div>
+            <div class="cf-field">
+              <label>Presupuesto aproximado</label>
+              <select>
+                <option value="">— Seleccioná —</option>
+                <option>Hasta $20M</option>
+                <option>$20M – $40M</option>
+                <option>$40M – $70M</option>
+                <option>Más de $70M</option>
+                <option>No aplica</option>
+              </select>
+            </div>
+          </div>
+          <div class="cf-field">
+            <label>Mensaje</label>
+            <textarea placeholder="Contanos qué necesitás o en qué podemos ayudarte..."></textarea>
+          </div>
+          <button type="submit" class="cf-submit">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            Enviar consulta
+          </button>
+          <div class="cf-success hidden" id="cf-success">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            ¡Consulta enviada! Te contactamos en menos de 24 horas.
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer id="footer">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <span class="logo-mark">CC</span>
+          <span class="logo-text">Cristian Caffer</span>
+        </div>
+        <p>Agencia inmobiliaria familiar con más de 15 años de experiencia en Balnearia, Córdoba. Compra, venta y alquiler de propiedades.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Facebook">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+          </a>
+          <a href="#" aria-label="Instagram">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="https://wa.me/543563430290" aria-label="WhatsApp">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h4>Navegación</h4>
+        <a href="#propiedades">Propiedades</a>
+        <a href="#nosotros">Nosotros</a>
+        <a href="#proceso">Cómo trabajamos</a>
+        <a href="#testimonios">Testimonios</a>
+        <a href="#contacto">Contacto</a>
+      </div>
+      <div class="footer-links">
+        <h4>Operaciones</h4>
+        <a href="#propiedades" onclick="setFilter('venta')">Comprar</a>
+        <a href="#propiedades" onclick="setFilter('alquiler')">Alquilar</a>
+        <a href="#propiedades" onclick="setFilter('terreno')">Terrenos</a>
+        <a href="#contacto">Tasar mi propiedad</a>
+        <a href="#contacto">Vender mi propiedad</a>
+      </div>
+      <div class="footer-contact-col">
+        <h4>Contacto</h4>
+        <p>Mar Chiquita 196<br>Balnearia, Córdoba X5141</p>
+        <p><a href="tel:035634330290">03563 43-0290</a></p>
+        <p><a href="/cdn-cgi/l/email-protection#91f8fff7fed1f2e3f8e2e5f8f0fff2f0f7f7f4e3bff2fefcbff0e3"><span class="__cf_email__" data-cfemail="036a6d656c4360716a70776a626d6062656566712d606c6e2d6271">[email&#160;protected]</span></a></p>
+        <p class="footer-hours">Lun–Vie: 8–18 hs · Sáb: 9–13 hs</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Cristian Caffer Inmobiliaria · Todos los derechos reservados · Balnearia, Córdoba</span>
+      <span>Matrícula CUCICBA N° 0000 · Agencia habilitada</span>
+    </div>
+  </footer>
+
+  <!-- ═══ FLOATING WHATSAPP ═══ -->
+  <a href="https://wa.me/543563430290?text=Hola!%20Vi%20la%20web%20y%20quiero%20consultar%20sobre%20propiedades." target="_blank" class="whatsapp-float" id="wa-float">
+    <svg width="26" height="26" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    <span class="wa-tooltip">¡Chateá con nosotros!</span>
+  </a>
+
+  <!-- ═══ PROPERTY MODAL ═══ -->
+  <div class="prop-modal-overlay" id="prop-modal-overlay" onclick="closePropModal()">
+    <div class="prop-modal" id="prop-modal" onclick="event.stopPropagation()">
+      <button class="pm-close" onclick="closePropModal()">✕</button>
+      <div class="pm-content" id="pm-content"></div>
+    </div>
+  </div>
+
+  <!-- ═══ TOAST ═══ -->
+  <div class="toast" id="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
