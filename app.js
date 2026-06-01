@@ -12,17 +12,11 @@ const DEFAULT_PROPS = [
   { id:5, title:'Chalet en barrio residencial', price:'$35.000.000', op:'venta', loc:'Balnearia Sur, Córdoba', mapUrl:'', beds:3, baths:1, m2:'140', imgs:['https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=700&q=80'], desc:'Encantador chalet en barrio tranquilo. Jardín con plantas frutales y garaje.', status:'active' },
   { id:6, title:'Local comercial en planta baja', price:'$55.000 / mes', op:'alquiler', loc:'Av. Colón, Balnearia', mapUrl:'', beds:0, baths:1, m2:'80', imgs:['https://images.unsplash.com/photo-1497366216548-37526070297c?w=700&q=80'], desc:'Local comercial en excelente ubicación sobre avenida principal.', status:'reserved' },
 ];
-<<<<<<< Updated upstream
 
 const STORAGE_KEY  = 'cc4_props';
 const MESSAGES_KEY = 'cc4_messages';
 const FALLBACK_IMG = 'https://images.unsplash.com/photo-1560185893-a55cbc8c57e8?w=700&q=80';
 const WA_NUMBER    = '543563430290';
-=======
-const STORAGE_KEY = 'cc4_props';
-const FALLBACK_IMG = 'https://images.unsplash.com/photo-1560185893-a55cbc8c57e8?w=700&q=80';
-const WA_NUMBER   = '543576474063';
->>>>>>> Stashed changes
 
 function loadProps() {
   try {
@@ -53,7 +47,6 @@ function handleLogoUpload(e) {
   reader.readAsDataURL(file);
 }
 
-<<<<<<< Updated upstream
 function applyLogo(src) {
   const navImg = document.getElementById('logo-img');
   const navCC  = document.getElementById('logo-cc');
@@ -106,15 +99,6 @@ function animateCounters() {
 
 /* ═══ RENDER PROPS ═══ */
 function filteredProps() { return props.filter(p => activeFilter === 'all' || p.op === activeFilter); }
-function renderProps() {
-  props = loadProps();
-  const grid = document.getElementById('props-grid'), empty = document.getElementById('props-empty'), count = document.getElementById('pf-count');
-  const list = filteredProps();
-  count.textContent = list.length + ' propiedad' + (list.length !== 1 ? 'es' : '');
-  if (!list.length) { grid.innerHTML = ''; empty.classList.remove('hidden'); return; }
-=======
-/* RENDER PROPS */
-function filteredProps(){ return props.filter(p=>activeFilter==='all'||p.op===activeFilter); }
 
 function buildCarousel(p) {
   const imgs = (p.imgs && p.imgs.length) ? p.imgs : [FALLBACK_IMG];
@@ -143,9 +127,7 @@ function buildCarousel(p) {
     </div>`;
 }
 
-function getCarousel(btn) {
-  return btn.closest('.pc-carousel');
-}
+function getCarousel(btn) { return btn.closest('.pc-carousel'); }
 function updateCarouselUI(carousel, idx) {
   carousel.dataset.current = idx;
   carousel.querySelectorAll('.pc-slide').forEach((s,i) => s.classList.toggle('active', i===idx));
@@ -156,38 +138,29 @@ function updateCarouselUI(carousel, idx) {
 window.nextSlide = function(btn) {
   const c = getCarousel(btn);
   const total = c.querySelectorAll('.pc-slide').length;
-  const next = (parseInt(c.dataset.current) + 1) % total;
-  updateCarouselUI(c, next);
+  updateCarouselUI(c, (parseInt(c.dataset.current) + 1) % total);
 };
 window.prevSlide = function(btn) {
   const c = getCarousel(btn);
   const total = c.querySelectorAll('.pc-slide').length;
-  const prev = (parseInt(c.dataset.current) - 1 + total) % total;
-  updateCarouselUI(c, prev);
+  updateCarouselUI(c, (parseInt(c.dataset.current) - 1 + total) % total);
 };
 window.gotoSlide = function(dot, idx) {
-  const c = dot.closest('.pc-carousel');
-  updateCarouselUI(c, idx);
+  updateCarouselUI(dot.closest('.pc-carousel'), idx);
 };
 
-function renderProps(){
-  props=loadProps();
-  const grid=document.getElementById('props-grid'), empty=document.getElementById('props-empty'), count=document.getElementById('pf-count');
-  const list=filteredProps();
-  count.textContent=list.length+' propiedad'+(list.length!==1?'es':'');
-  if(!list.length){ grid.innerHTML=''; empty.classList.remove('hidden'); return; }
->>>>>>> Stashed changes
+function renderProps() {
+  props = loadProps();
+  const grid = document.getElementById('props-grid'), empty = document.getElementById('props-empty'), count = document.getElementById('pf-count');
+  const list = filteredProps();
+  count.textContent = list.length + ' propiedad' + (list.length !== 1 ? 'es' : '');
+  if (!list.length) { grid.innerHTML = ''; empty.classList.remove('hidden'); return; }
   empty.classList.add('hidden');
   grid.innerHTML = list.map(p => `
     <div class="prop-card reveal-up" style="--d:${(Math.random() * .1).toFixed(2)}s" onclick="openPropModal(${p.id})">
       <div class="pc-img">
-<<<<<<< Updated upstream
-        <img src="${p.img || FALLBACK_IMG}" alt="${p.title}" loading="lazy" onerror="this.src='${FALLBACK_IMG}'" />
-        <span class="pc-badge ${p.status === 'reserved' ? 'reservada' : p.op}">${p.status === 'reserved' ? 'Reservada' : p.op === 'venta' ? 'En venta' : p.op === 'alquiler' ? 'Alquiler' : 'Terreno'}</span>
-=======
         ${buildCarousel(p)}
-        <span class="pc-badge ${p.status==='reserved'?'reservada':p.op}">${p.status==='reserved'?'Reservada':p.op==='venta'?'En venta':p.op==='alquiler'?'Alquiler':'Terreno'}</span>
->>>>>>> Stashed changes
+        <span class="pc-badge ${p.status === 'reserved' ? 'reservada' : p.op}">${p.status === 'reserved' ? 'Reservada' : p.op === 'venta' ? 'En venta' : p.op === 'alquiler' ? 'Alquiler' : 'Terreno'}</span>
         <button class="pc-fav" onclick="event.stopPropagation();toggleFav(this)"><svg width="14" height="14" fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 000-7.78z"/></svg></button>
       </div>
       <div class="pc-body">
@@ -205,72 +178,7 @@ function renderProps(){
   reObserve(); addHover('.prop-card');
 }
 
-<<<<<<< Updated upstream
-/* ═══ PROP MODAL — con WhatsApp ═══ */
-function openPropModal(id) {
-  const p = props.find(x => x.id === id); if (!p) return;
-
-  const waMsg = encodeURIComponent(
-    `Hola! Vi la web y me interesa la siguiente propiedad:\n\n` +
-    `🏠 *${p.title}*\n` +
-    `💰 Precio: ${p.price}\n` +
-    `📍 Ubicación: ${p.loc}\n\n` +
-    `¿Me podés dar más información?`
-  );
-  const waLink = `https://wa.me/${WA_NUMBER}?text=${waMsg}`;
-
-  const opLabel = p.status === 'reserved' ? 'Reservada' : p.op === 'venta' ? 'En venta' : p.op === 'alquiler' ? 'Alquiler' : 'Terreno';
-  const opClass = p.status === 'reserved' ? 'reservada' : p.op;
-
-  document.getElementById('pm-content').innerHTML = `
-    <div class="pm-layout">
-      <div class="pm-img-panel">
-        <img src="${p.img || FALLBACK_IMG}" alt="${p.title}" onerror="this.src='${FALLBACK_IMG}'" />
-        <div class="pm-img-overlay">
-          <span class="pc-badge pm-badge ${opClass}">${opLabel}</span>
-        </div>
-      </div>
-      <div class="pm-info-panel">
-        <div class="pm-info-top">
-          <div class="pm-price">${p.price}</div>
-          <div class="pm-title">${p.title}</div>
-          <div class="pm-loc">
-            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            ${p.loc}
-          </div>
-        </div>
-        <div class="pm-stats-row">
-          ${p.beds > 0 ? `
-          <div class="pm-stat-box">
-            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M2 4v16M22 4v16M2 8h20M2 16h20"/></svg>
-            <span class="pm-stat-n">${p.beds}</span>
-            <span class="pm-stat-l">Dorm.</span>
-          </div>` : ''}
-          ${p.baths > 0 ? `
-          <div class="pm-stat-box">
-            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4 12h16v4a4 4 0 01-4 4H8a4 4 0 01-4-4v-4z"/><path d="M6 12V5a2 2 0 012-2h0a2 2 0 012 2v1"/></svg>
-            <span class="pm-stat-n">${p.baths}</span>
-            <span class="pm-stat-l">Baños</span>
-          </div>` : ''}
-          ${p.m2 ? `
-          <div class="pm-stat-box">
-            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
-            <span class="pm-stat-n">${p.m2}</span>
-            <span class="pm-stat-l">m²</span>
-          </div>` : ''}
-          <div class="pm-stat-box">
-            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
-            <span class="pm-stat-n" style="font-size:11px;font-weight:600">${opLabel}</span>
-            <span class="pm-stat-l">Tipo</span>
-          </div>
-        </div>
-        ${p.desc ? `<div class="pm-desc">${p.desc}</div>` : ''}
-        <a href="${waLink}" target="_blank" class="pm-wa-btn">
-          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Consultar por WhatsApp
-        </a>
-=======
-/* PROP MODAL */
+/* ═══ PROP MODAL ═══ */
 function buildModalCarousel(p) {
   const imgs = (p.imgs && p.imgs.length) ? p.imgs : [FALLBACK_IMG];
   if (imgs.length === 1) {
@@ -306,40 +214,50 @@ function pmUpdateUI(carousel, idx) {
 }
 window.pmNext = function(btn) {
   const c = btn.closest('.pm-carousel');
-  const total = c.querySelectorAll('.pm-slide').length;
-  pmUpdateUI(c, (parseInt(c.dataset.current)+1) % total);
+  pmUpdateUI(c, (parseInt(c.dataset.current) + 1) % c.querySelectorAll('.pm-slide').length);
 };
 window.pmPrev = function(btn) {
   const c = btn.closest('.pm-carousel');
   const total = c.querySelectorAll('.pm-slide').length;
-  pmUpdateUI(c, (parseInt(c.dataset.current)-1+total) % total);
+  pmUpdateUI(c, (parseInt(c.dataset.current) - 1 + total) % total);
 };
-window.pmGoto = function(dot, idx) {
-  pmUpdateUI(dot.closest('.pm-carousel'), idx);
-};
+window.pmGoto = function(dot, idx) { pmUpdateUI(dot.closest('.pm-carousel'), idx); };
 
-function openPropModal(id){
-  const p=props.find(x=>x.id===id); if(!p) return;
+function openPropModal(id) {
+  const p = props.find(x => x.id === id); if (!p) return;
+  const waMsg = encodeURIComponent(
+    `Hola! Vi la web y me interesa la siguiente propiedad:\n\n` +
+    `🏠 *${p.title}*\n` +
+    `💰 Precio: ${p.price}\n` +
+    `📍 Ubicación: ${p.loc}\n\n` +
+    `¿Me podés dar más información?`
+  );
+  const waLink = `https://wa.me/${WA_NUMBER}?text=${waMsg}`;
   const mapBtn = p.mapUrl
     ? `<a href="${p.mapUrl}" target="_blank" class="pm-map-btn">
         <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
         Ver ubicación en el mapa
       </a>`
     : '';
-  document.getElementById('pm-content').innerHTML=`
+  document.getElementById('pm-content').innerHTML = `
     ${buildModalCarousel(p)}
     <div class="pm-body">
-      <span class="pc-badge pm-badge ${p.status==='reserved'?'reservada':p.op}">${p.status==='reserved'?'Reservada':p.op==='venta'?'En venta':p.op==='alquiler'?'Alquiler':'Terreno'}</span>
-      <div class="pm-price">${p.price}</div><div class="pm-title">${p.title}</div>
+      <span class="pc-badge pm-badge ${p.status === 'reserved' ? 'reservada' : p.op}">${p.status === 'reserved' ? 'Reservada' : p.op === 'venta' ? 'En venta' : p.op === 'alquiler' ? 'Alquiler' : 'Terreno'}</span>
+      <div class="pm-price">${p.price}</div>
+      <div class="pm-title">${p.title}</div>
       <div class="pc-loc" style="margin-bottom:12px"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>${p.loc}</div>
       ${mapBtn}
       <div class="pm-specs" style="margin-top:16px">
-        ${p.beds>0?`<span class="pm-spec">${p.beds} Dormitorios</span>`:''}
-        ${p.baths>0?`<span class="pm-spec">${p.baths} Baños</span>`:''}
-        ${p.m2?`<span class="pm-spec">${p.m2} m²</span>`:''}
-        <span class="pm-spec">${p.op.charAt(0).toUpperCase()+p.op.slice(1)}</span>
->>>>>>> Stashed changes
+        ${p.beds > 0 ? `<span class="pm-spec">${p.beds} Dormitorios</span>` : ''}
+        ${p.baths > 0 ? `<span class="pm-spec">${p.baths} Baños</span>` : ''}
+        ${p.m2 ? `<span class="pm-spec">${p.m2} m²</span>` : ''}
+        <span class="pm-spec">${p.op.charAt(0).toUpperCase() + p.op.slice(1)}</span>
       </div>
+      ${p.desc ? `<div class="pm-desc">${p.desc}</div>` : ''}
+      <a href="${waLink}" target="_blank" class="pm-wa-btn">
+        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Consultar por WhatsApp
+      </a>
     </div>`;
   document.getElementById('prop-modal-overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -357,11 +275,7 @@ window.setFilter = function (f) { activeFilter = f; document.querySelectorAll('.
 /* ═══ FAV ═══ */
 function toggleFav(btn) { const svg = btn.querySelector('svg'); const isFav = svg.style.fill === 'rgb(201, 169, 110)'; svg.style.fill = isFav ? 'none' : 'rgb(201, 169, 110)'; svg.style.stroke = isFav ? '' : 'rgb(201, 169, 110)'; showToast(isFav ? 'Eliminado de favoritos' : 'Guardado en favoritos ♥', isFav ? '' : 'gold'); }
 
-<<<<<<< Updated upstream
 /* ═══ CONTACT FORM — redirige a WhatsApp ═══ */
-=======
-/* CONTACT FORM → WHATSAPP */
->>>>>>> Stashed changes
 document.getElementById('contact-form').addEventListener('submit', function(e) {
   e.preventDefault();
   const btn = this.querySelector('.cf-submit');
@@ -373,9 +287,7 @@ document.getElementById('contact-form').addEventListener('submit', function(e) {
   const motivo   = inp[3].value       || 'No indicado';
   const presup   = inp[4].value       || 'No indicado';
   const mensaje  = inp[5].value.trim() || '';
-<<<<<<< Updated upstream
 
-  // Guardar en localStorage
   const msg = {
     id: Date.now(),
     name: nombre, phone: telefono, email, type: motivo, budget: presup, message: mensaje,
@@ -386,7 +298,6 @@ document.getElementById('contact-form').addEventListener('submit', function(e) {
   existing.unshift(msg);
   localStorage.setItem(MESSAGES_KEY, JSON.stringify(existing));
 
-  // Armar mensaje WhatsApp
   let texto = `🏠 *Nueva consulta — Cristian Caffer Inmobiliaria*\n\n`;
   texto += `👤 *Nombre:* ${nombre}\n`;
   texto += `📞 *Teléfono:* ${telefono}\n`;
@@ -395,11 +306,6 @@ document.getElementById('contact-form').addEventListener('submit', function(e) {
   texto += `💰 *Presupuesto:* ${presup}\n`;
   if (mensaje) texto += `\n💬 *Mensaje:*\n${mensaje}`;
 
-=======
-  let texto = `🏠 *Nueva consulta — Cristian Caffer Inmobiliaria*\n\n`;
-  texto += `👤 *Nombre:* ${nombre}\n📞 *Teléfono:* ${telefono}\n📧 *Email:* ${email}\n📋 *Motivo:* ${motivo}\n💰 *Presupuesto:* ${presup}`;
-  if (mensaje) texto += `\n\n💬 *Mensaje:*\n${mensaje}`;
->>>>>>> Stashed changes
   const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(texto)}`;
   setTimeout(() => {
     document.getElementById('cf-success').classList.remove('hidden');
@@ -418,18 +324,7 @@ document.querySelectorAll('.footer-links a').forEach(a => { a.addEventListener('
 let toastTimer;
 function showToast(msg, type = '') { const t = document.getElementById('toast'); t.textContent = msg; t.className = 'toast show' + (type ? ' ' + type : ''); clearTimeout(toastTimer); toastTimer = setTimeout(() => t.className = 'toast', 3200); }
 
-<<<<<<< Updated upstream
 /* ═══ SITE IMAGES FROM ADMIN ═══ */
-=======
-/* INIT */
-(function(){
-  renderProps();
-  loadSiteImages();
-  const wa=document.getElementById('wa-float'); if(wa) wa.style.cssText+=';opacity:0;transition:opacity .3s';
-  addHover('a,button,.prop-card,.testi-card,.about-feature,.cd-item,.pt-step');
-})();
-
->>>>>>> Stashed changes
 function loadSiteImages() {
   const heroBg = localStorage.getItem('cc4_hero_bg');
   if (heroBg) { const img = document.querySelector('.hero-bg-img'); if (img) img.src = heroBg; }
