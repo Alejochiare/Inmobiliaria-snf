@@ -305,7 +305,7 @@ document.getElementById('contact-form').addEventListener('submit', function(e) {
   texto += `📋 *Motivo:* ${motivo}\n`;
   texto += `💰 *Presupuesto:* ${presup}\n`;
   if (mensaje) texto += `\n💬 *Mensaje:*\n${mensaje}`;
-
+  
   const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(texto)}`;
   setTimeout(() => {
     document.getElementById('cf-success').classList.remove('hidden');
