@@ -46,12 +46,6 @@
 </head>
 <body>
 
-  <!-- ═══ LOADER ═══ -->
-  <div id="loader">
-    <div class="loader-logo">CC</div>
-    <div class="loader-bar"><div class="loader-fill"></div></div>
-  </div>
-
   <!-- ═══ CURSOR ═══ -->
   <div id="cursor-dot"></div>
   <div id="cursor-ring"></div>
@@ -59,7 +53,7 @@
   <!-- ═══ NAVBAR ═══ -->
   <header id="navbar">
     <div class="nav-inner">
-      <a href="#" class="nav-logo" onclick="document.getElementById('logo-upload').click();return false;" title="Clic para cambiar el logo">
+      <a href="index.html" class="nav-logo">
         <span class="logo-mark" id="logo-mark">
           <img id="logo-img" src="" alt="Logo" style="display:none;height:36px;width:auto;border-radius:4px;object-fit:contain;" />
           <span id="logo-cc">CC</span>
@@ -97,26 +91,37 @@
 
   <!-- ═══ HERO ═══ -->
   <section id="hero">
-    <div class="hero-bg-wrap">
-      <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1600&q=85" alt="" class="hero-bg-img" id="hero-bg" />
-      <div class="hero-overlay"></div>
-      <div class="hero-gradient"></div>
-    </div>
-
-    <div class="hero-content">
-      <div class="hero-badge reveal-up">Balnearia, Córdoba · Est. 2009</div>
-      <h1 class="hero-h1 reveal-up" style="--d:.1s">
+    <img id="hero-bg" class="hero-bg-img"
+         src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1600&q=80"
+         alt="" loading="eager" aria-hidden="true" />
+    <div class="hero-bg-overlay"></div>
+    <div class="hero-center reveal-up">
+      <div class="hero-badge">
+        <span class="hero-badge-dot"></span>
+        Balnearia, Córdoba · Est. 2009
+      </div>
+      <h1 class="hero-h1">
         Encontrá el hogar<br>
         <em>que siempre soñaste</em>
       </h1>
-      <p class="hero-sub reveal-up" style="--d:.2s">
-        Más de 15 años conectando familias con su propiedad ideal.<br>
+      <p class="hero-sub">
+        Más de 15 años conectando familias con su propiedad ideal.
         Compra, venta y alquiler en Balnearia y la región.
       </p>
+      <div class="hero-ctas">
+        <button class="hero-cta-main" onclick="document.getElementById('propiedades').scrollIntoView({behavior:'smooth'})">
+          Ver propiedades
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+        <a href="tel:035634330290" class="hero-cta-sec">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.5 3.18 2 2 0 012.18 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.15a16 16 0 006.29 6.29l1.42-1.42a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          Llamar ahora
+        </a>
+      </div>
     </div>
 
-    <!-- Stats ticker -->
-    <div class="hero-stats reveal-up" style="--d:.45s">
+    <!-- Barra de estadísticas -->
+    <div class="hero-stats reveal-up" style="--d:.35s">
       <div class="hs-stat">
         <span class="hs-n" data-count="320">0</span><span>+</span>
         <div class="hs-l">Familias asesoradas</div>
@@ -136,11 +141,6 @@
         <span class="hs-n" data-count="98">0</span><span>%</span>
         <div class="hs-l">Clientes satisfechos</div>
       </div>
-    </div>
-
-    <div class="hero-scroll-hint">
-      <span>Explorá</span>
-      <div class="scroll-line-anim"></div>
     </div>
   </section>
 

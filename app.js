@@ -69,7 +69,7 @@ document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; do
 function addHover(s) { document.querySelectorAll(s).forEach(el => { el.addEventListener('mouseenter', () => ring.classList.add('hover')); el.addEventListener('mouseleave', () => ring.classList.remove('hover')); }); }
 
 /* ═══ LOADER ═══ */
-window.addEventListener('load', () => { setTimeout(() => { document.getElementById('loader').classList.add('done'); triggerReveal(); animateCounters(); }, 1600); });
+window.addEventListener('load', () => { triggerReveal(); animateCounters(); });
 
 /* ═══ REVEAL ═══ */
 const rvObs = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); rvObs.unobserve(e.target); } }), { threshold: .1 });
