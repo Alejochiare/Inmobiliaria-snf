@@ -143,53 +143,29 @@ function buildContent(p) {
 
   /* price + whatsapp */
   document.getElementById('pd-price').textContent = p.price;
-
-  const waMsg = encodeURIComponent(
-    `Hola! Vi la web y me interesa la siguiente propiedad:\n\n` +
-    `🏠 *${p.title}*\n💰 Precio: ${p.price}\n📍 Ubicación: ${p.loc}\n\n¿Me podés dar más información?`
-  );
-  document.getElementById('pd-wa-btn').href = `https://wa.me/${WA_NUMBER}?text=${waMsg}`;
-
   document.getElementById('pd-codigo').textContent = `Código de aviso: ${p.id}`;
+
+  /* store property ref for dynamic WA link */
+  window._pdProp = p;
+  pdUpdateWa();
 }
 
-/* ── FORM ── */
-function buildForm(p) {
-  document.getElementById('pd-msg').value =
-    `Hola, vi esta propiedad en el sitio web de la inmobiliaria y me gustaría que me contacten. Propiedad: ${p.title}. Gracias.`;
+/* ── WHATSAPP DINÁMICO (se actualiza al escribir el nombre) ── */
+window.pdUpdateWa = function() {
+  const p = window._pdProp;
+  if (!p) return;
+  const nombre = (document.getElementById('pd-nombre')?.value?.trim()) || '';
+  const prefix = nombre ? `Hola! Soy *${nombre}*.\n\n` : 'Hola!\n\n';
+  const waMsg = encodeURIComponent(
+    `${prefix}Vi esta propiedad en el sitio web y me gustaría más información:\n\n` +
+    `🏠 *${p.title}*\n💰 Precio: ${p.price}\n📍 ${p.loc}\n\n¿Me podés ayudar?`
+  );
+  const btn = document.getElementById('pd-wa-btn');
+  if (btn) btn.href = `https://wa.me/${WA_NUMBER}?text=${waMsg}`;
+};
 
-  document.getElementById('pd-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const btn      = this.querySelector('.pd-btn-submit');
-    btn.textContent = 'Enviando…'; btn.disabled = true;
-
-    const nombre   = document.getElementById('pd-nombre').value.trim()   || 'Sin nombre';
-    const telefono = document.getElementById('pd-telefono').value.trim()  || 'No indicado';
-    const email    = document.getElementById('pd-email').value.trim()     || 'No indicado';
-    const mensaje  = document.getElementById('pd-msg').value.trim()       || '';
-
-    /* save to admin */
-    const entry = {
-      id: Date.now(), name: nombre, phone: telefono, email,
-      type: 'Consulta propiedad', budget: '',
-      message: mensaje, property: p.title, propertyId: p.id,
-      date: new Date().toLocaleDateString('es-AR', { day:'2-digit', month:'2-digit', year:'numeric' }),
-      read: false
-    };
-    const msgs = (() => { try { return JSON.parse(localStorage.getItem(MESSAGES_KEY)) || []; } catch { return []; } })();
-    msgs.unshift(entry);
-    localStorage.setItem(MESSAGES_KEY, JSON.stringify(msgs));
-
-    setTimeout(() => {
-      document.getElementById('pd-form-success').classList.add('show');
-      this.reset();
-      document.getElementById('pd-msg').value =
-        `Hola, vi esta propiedad en el sitio web de la inmobiliaria y me gustaría que me contacten. Propiedad: ${p.title}. Gracias.`;
-      btn.textContent = 'Contactar'; btn.disabled = false;
-      setTimeout(() => document.getElementById('pd-form-success').classList.remove('show'), 6000);
-    }, 600);
-  });
-}
+/* ── FORM ── (vacío — se eliminó el formulario completo) ── */
+function buildForm(p) { /* solo el nombre se maneja vía pdUpdateWa */ }
 
 /* ── LIGHTBOX ── */
 window.openLightbox = function(idx) {

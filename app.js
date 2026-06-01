@@ -252,7 +252,7 @@ document.getElementById('contact-form').addEventListener('submit', function(e) {
   const msg = {
     id: Date.now(),
     name: nombre, phone: telefono, email, type: motivo, budget: presup, message: mensaje,
-    date: new Date().toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' }),
+    date: new Date().toLocaleDateString('es-AR', { day:'2-digit', month:'2-digit', year:'numeric' }),
     read: false
   };
   const existing = (() => { try { return JSON.parse(localStorage.getItem(MESSAGES_KEY)) || []; } catch { return []; } })();
@@ -266,7 +266,7 @@ document.getElementById('contact-form').addEventListener('submit', function(e) {
   texto += `📋 *Motivo:* ${motivo}\n`;
   texto += `💰 *Presupuesto:* ${presup}\n`;
   if (mensaje) texto += `\n💬 *Mensaje:*\n${mensaje}`;
-  
+
   const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(texto)}`;
   setTimeout(() => {
     document.getElementById('cf-success').classList.remove('hidden');

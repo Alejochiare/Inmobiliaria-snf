@@ -306,17 +306,11 @@
         <div class="pd-price-label">Precio</div>
         <div id="pd-price" class="pd-price-val"></div>
 
-        <div id="pd-form-success" class="pd-form-success">
-          ✓ Mensaje guardado. Nos pondremos en contacto pronto.
+        <div style="margin-bottom:12px">
+          <input type="text" id="pd-nombre" placeholder="Tu nombre"
+                 style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:11px 14px;color:var(--text);font-size:14px;font-family:'Outfit',sans-serif;outline:none;transition:border-color .2s;"
+                 oninput="pdUpdateWa()" />
         </div>
-
-        <form id="pd-form" class="pd-form">
-          <input type="text"  id="pd-nombre"   placeholder="Nombre *"   required />
-          <input type="tel"   id="pd-telefono" placeholder="Teléfono *" required />
-          <input type="email" id="pd-email"    placeholder="Email *"    required />
-          <textarea id="pd-msg" rows="4"></textarea>
-          <button type="submit" class="pd-btn-submit">Contactar</button>
-        </form>
 
         <a id="pd-wa-btn" href="#" class="pd-btn-wa-big" target="_blank" rel="noopener">
           <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">

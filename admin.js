@@ -31,7 +31,63 @@ function loadProps() {
     });
   } catch { return [...DEFAULT_PROPS]; }
 }
-function saveProps()    { localStorage.setItem(STORAGE_KEY, JSON.stringify(props)); }
+function saveProps() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(props));
+  } catch(e) {
+    /* localStorage lleno → limpiamos la entrada vieja y reintentamos */
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(props));
+      showToast('Guardado correctamente ✓', 'gold');
+    } catch(e2) {
+      showToast('Imágenes demasiado grandes. Intentá con menos fotos o más chicas.', 'error');
+    }
+  }
+}
+
+function limpiarStorage() {
+  if (!confirm('¿Limpiar el almacenamiento local? Las propiedades se resetean a las predeterminadas.')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  localStorage.removeItem('cc4_messages');
+  localStorage.removeItem('cc4_logo');
+  localStorage.removeItem('cc4_hero_bg');
+  localStorage.removeItem('cc4_about_img');
+  props = [...DEFAULT_PROPS];
+  saveProps();
+  refreshAdmin();
+  showToast('Almacenamiento limpiado ✓', 'gold');
+}
+
+function compressFile(file) {
+  return new Promise(function(resolve) {
+    var MAX = 800, Q = 0.55;
+    var objectUrl = URL.createObjectURL(file);
+    var img = new Image();
+    img.onload = function() {
+      URL.revokeObjectURL(objectUrl);
+      try {
+        var ratio = Math.min(1, MAX / Math.max(img.width, img.height));
+        var w = Math.round(img.width * ratio) || MAX;
+        var h = Math.round(img.height * ratio) || MAX;
+        var c = document.createElement('canvas');
+        c.width = w; c.height = h;
+        c.getContext('2d').drawImage(img, 0, 0, w, h);
+        var result = c.toDataURL('image/jpeg', Q);
+        /* si sigue > 120KB en base64, recomprimir más */
+        if (result.length > 160000) {
+          var c2 = document.createElement('canvas');
+          c2.width = Math.round(w * 0.7); c2.height = Math.round(h * 0.7);
+          c2.getContext('2d').drawImage(img, 0, 0, c2.width, c2.height);
+          result = c2.toDataURL('image/jpeg', 0.45);
+        }
+        resolve(result);
+      } catch(e) { resolve(null); }
+    };
+    img.onerror = function() { URL.revokeObjectURL(objectUrl); resolve(null); };
+    img.src = objectUrl;
+  });
+}
 function nextId()       { return props.length ? Math.max(...props.map(p => p.id)) + 1 : 1; }
 function statusLabel(s) { return { active:'Activa', reserved:'Reservada', sold:'Vendida' }[s] || s; }
 function firstImg(p)    { return (p.imgs && p.imgs[0]) || FALLBACK_IMG; }
@@ -164,16 +220,14 @@ function renderPropTable() {
 /* ─── MULTI IMAGE HANDLING ─── */
 function handleImgUpload(input) {
   if (!input.files || !input.files.length) return;
-  const files = Array.from(input.files);
-  let loaded = 0;
-  files.forEach(file => {
-    const reader = new FileReader();
-    reader.onload = e => {
-      pendingImgs.push({ src: e.target.result });
-      loaded++;
-      if (loaded === files.length) renderThumbsGrid();
-    };
-    reader.readAsDataURL(file);
+  var files = Array.from(input.files);
+  var pending = files.length;
+  files.forEach(function(file) {
+    compressFile(file).then(function(src) {
+      if (src) pendingImgs.push({ src: src });
+      pending--;
+      if (pending === 0) renderThumbsGrid();
+    });
   });
   input.value = '';
 }
