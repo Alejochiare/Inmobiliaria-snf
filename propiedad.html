@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Propiedad — Cristian Caffer</title>
+  <meta name="description" content="Detalle de propiedad — Cristian Caffer Inmobiliaria Balnearia" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* override cursor:none de styles.css */
+    body, button, a, input, textarea, select { cursor: auto !important; }
+    button { cursor: pointer !important; }
+    a[href] { cursor: pointer !important; }
+
+    /* ── NAVBAR ─────────────────────────── */
+    #pd-nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(13,17,23,.96);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      height: 64px;
+    }
+    .pd-nav-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 24px;
+      height: 100%; display: flex; align-items: center; justify-content: space-between;
+    }
+    .pd-back {
+      display: flex; align-items: center; gap: 7px;
+      color: var(--text2); font-size: 14px; font-weight: 500;
+      text-decoration: none; transition: color .2s;
+    }
+    .pd-back:hover { color: var(--gold); }
+    .pd-logo-link { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .pd-logo-mark {
+      width: 36px; height: 36px; background: var(--gold);
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 14px; color: #0D1117; flex-shrink: 0; overflow: hidden;
+    }
+    .pd-logo-mark img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .pd-logo-text { font-size: 15px; font-weight: 600; color: var(--text); }
+    .pd-nav-spacer { width: 100px; }
+
+    /* ── GALLERY ─────────────────────────── */
+    .pd-gallery-wrap {
+      max-width: 1200px; margin: 28px auto 0; padding: 0 24px; position: relative;
+    }
+    .pd-gallery {
+      display: grid; grid-template-columns: 3fr 2fr;
+      gap: 5px; height: 500px; border-radius: 14px; overflow: hidden;
+    }
+    .pd-gallery.single { grid-template-columns: 1fr; }
+    .pd-gal-main, .pd-gal-thumb {
+      overflow: hidden; position: relative; cursor: pointer !important;
+    }
+    .pd-gal-main { height: 100%; }
+    .pd-gal-main img, .pd-gal-thumb img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform .42s ease; display: block;
+    }
+    .pd-gal-main:hover img, .pd-gal-thumb:hover img { transform: scale(1.035); }
+    .pd-gal-side { display: flex; flex-direction: column; gap: 5px; }
+    .pd-gal-thumb { flex: 1; }
+    .pd-gal-more-overlay {
+      position: absolute; inset: 0; background: rgba(0,0,0,.55);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .pd-gal-more-overlay span { font-size: 22px; font-weight: 600; color: #fff; }
+    .pd-photo-count {
+      position: absolute; bottom: 16px; right: 16px;
+      background: rgba(13,17,23,.85); backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,.13); color: var(--text);
+      font-size: 13px; font-weight: 500; padding: 8px 16px;
+      border-radius: 8px; display: flex; align-items: center; gap: 6px;
+      cursor: pointer !important; transition: background .2s; z-index: 5;
+      font-family: 'Outfit', sans-serif;
+    }
+    .pd-photo-count:hover { background: rgba(201,169,110,.22); }
+
+    /* ── CONTENT LAYOUT ──────────────────── */
+    .pd-content {
+      max-width: 1200px; margin: 38px auto 72px;
+      padding: 0 24px;
+      display: grid; grid-template-columns: 1fr 380px; gap: 44px; align-items: start;
+    }
+
+    /* ── LEFT COLUMN ─────────────────────── */
+    .pd-header { margin-bottom: 26px; }
+    .pd-property-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.95rem; font-weight: 700;
+      color: var(--text); line-height: 1.2; margin: 14px 0 12px;
+    }
+    .pd-loc-row {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 14px; color: var(--text2);
+    }
+    .pd-specs-row {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+      gap: 10px; margin-bottom: 34px;
+    }
+    .pd-spec-box {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 12px; padding: 14px 10px; text-align: center;
+    }
+    .pd-spec-label {
+      font-size: 10.5px; color: var(--text2);
+      text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px;
+    }
+    .pd-spec-val { font-size: 1.1rem; font-weight: 700; color: var(--text); line-height: 1; }
+    .pd-section { margin-bottom: 32px; padding-bottom: 32px; border-bottom: 1px solid var(--border); }
+    .pd-section:last-of-type { border-bottom: none; }
+    .pd-section-title { font-size: .95rem; font-weight: 600; color: var(--text); margin-bottom: 14px; }
+    .pd-desc-text { font-size: 14.5px; color: var(--text2); line-height: 1.82; }
+    .pd-loc-text {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 14px; color: var(--text2); margin-bottom: 16px;
+    }
+    .pd-map-wrap {
+      border-radius: 12px; overflow: hidden; border: 1px solid var(--border); margin-bottom: 12px;
+    }
+    .pd-map-wrap iframe { width: 100%; height: 290px; border: none; display: block; }
+    .pd-map-ext-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 13px; color: var(--gold); text-decoration: none; transition: opacity .2s;
+    }
+    .pd-map-ext-link:hover { opacity: .72; }
+    .pd-codigo-tag { font-size: 12px; color: var(--text3); margin-top: 10px; }
+
+    /* ── RIGHT COLUMN ────────────────────── */
+    .pd-right { position: sticky; top: 84px; }
+    .pd-contact-card {
+      background: var(--bg2); border: 1px solid var(--border2);
+      border-radius: 16px; padding: 28px 24px;
+    }
+    .pd-price-label {
+      font-size: 11px; color: var(--text2);
+      text-transform: uppercase; letter-spacing: .07em; margin-bottom: 4px;
+    }
+    .pd-price-val {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.75rem; font-weight: 700;
+      color: var(--text); line-height: 1.1; margin-bottom: 22px;
+    }
+    .pd-form { display: flex; flex-direction: column; gap: 10px; margin-bottom: 10px; }
+    .pd-form input, .pd-form textarea {
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: 10px; padding: 11px 14px;
+      color: var(--text); font-size: 14px;
+      font-family: 'Outfit', sans-serif; outline: none;
+      transition: border-color .2s; resize: vertical; width: 100%;
+    }
+    .pd-form input::placeholder, .pd-form textarea::placeholder { color: var(--text3); }
+    .pd-form input:focus, .pd-form textarea:focus { border-color: rgba(201,169,110,.5); }
+    .pd-btn-submit {
+      width: 100%; background: var(--bg3); border: 1px solid var(--border2);
+      color: var(--text); font-size: 14.5px; font-weight: 600;
+      font-family: 'Outfit', sans-serif; padding: 13px;
+      border-radius: 12px; transition: background .2s, border-color .2s; margin-bottom: 8px;
+    }
+    .pd-btn-submit:hover { background: rgba(255,255,255,.045); border-color: var(--gold); }
+    .pd-btn-wa-big {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      width: 100%; background: #25d366; color: #fff;
+      font-size: 14.5px; font-weight: 600; font-family: 'Outfit', sans-serif;
+      padding: 13px; border-radius: 12px; text-decoration: none;
+      transition: background .2s, transform .15s; margin-bottom: 12px;
+    }
+    .pd-btn-wa-big:hover { background: #1ebe5d; transform: translateY(-1px); }
+    .pd-form-terms { font-size: 11px; color: var(--text3); text-align: center; line-height: 1.5; }
+    .pd-form-success {
+      display: none; background: rgba(63,185,80,.09);
+      border: 1px solid rgba(63,185,80,.22);
+      border-radius: 10px; padding: 11px 16px;
+      font-size: 13px; color: #3FB950;
+      text-align: center; margin-bottom: 10px;
+    }
+    .pd-form-success.show { display: block; }
+
+    /* ── LIGHTBOX ────────────────────────── */
+    .pd-lightbox {
+      position: fixed; inset: 0; background: rgba(0,0,0,.96);
+      z-index: 999; display: none; align-items: center; justify-content: center;
+    }
+    .pd-lightbox.open { display: flex; }
+    .pd-lb-img-wrap {
+      max-width: 92vw; max-height: 88vh;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .pd-lb-img-wrap img {
+      max-width: 100%; max-height: 88vh;
+      object-fit: contain; border-radius: 6px; display: block;
+    }
+    .pd-lb-close {
+      position: absolute; top: 18px; right: 22px;
+      width: 44px; height: 44px; background: rgba(255,255,255,.09);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 50%; color: #fff; font-size: 18px;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .2s;
+    }
+    .pd-lb-close:hover { background: rgba(255,255,255,.18); }
+    .pd-lb-nav {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 50px; height: 50px; background: rgba(255,255,255,.09);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 50%; color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .2s;
+    }
+    .pd-lb-nav:hover { background: rgba(255,255,255,.2); }
+    .pd-lb-prev { left: 20px; }
+    .pd-lb-next { right: 20px; }
+    .pd-lb-count {
+      position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%);
+      font-size: 14px; color: rgba(255,255,255,.5);
+    }
+
+    /* ── TOAST ───────────────────────────── */
+    #pd-toast {
+      position: fixed; bottom: 28px; left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--bg2); border: 1px solid var(--border2);
+      color: var(--text); font-size: 14px; font-weight: 500;
+      padding: 12px 24px; border-radius: 40px;
+      transition: transform .3s, opacity .3s;
+      opacity: 0; pointer-events: none; z-index: 800; white-space: nowrap;
+    }
+    #pd-toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+    #pd-toast.gold { border-color: rgba(201,169,110,.3); color: var(--gold); }
+
+    /* ── RESPONSIVE ──────────────────────── */
+    @media (max-width: 980px) {
+      .pd-content { grid-template-columns: 1fr; gap: 28px; }
+      .pd-right { position: static; }
+      .pd-gallery { height: 380px; }
+      .pd-nav-spacer { display: none; }
+    }
+    @media (max-width: 620px) {
+      .pd-gallery { grid-template-columns: 1fr; height: 260px; }
+      .pd-gal-side { display: none; }
+      .pd-gallery-wrap, .pd-content { padding: 0 16px; }
+      .pd-property-title { font-size: 1.45rem; }
+      .pd-price-val { font-size: 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header id="pd-nav">
+    <div class="pd-nav-inner">
+      <a href="index.html" class="pd-back">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+          <path d="M19 12H5M12 5l-7 7 7 7"/>
+        </svg>
+        Volver
+      </a>
+      <a href="index.html" class="pd-logo-link">
+        <div class="pd-logo-mark" id="pd-logo-mark">
+          <img id="pd-logo-img" src="" alt="Logo" style="display:none" />
+          <span id="pd-logo-cc">CC</span>
+        </div>
+        <span class="pd-logo-text">Cristian Caffer</span>
+      </a>
+      <div class="pd-nav-spacer"></div>
+    </div>
+  </header>
+
+  <!-- GALERÍA -->
+  <div class="pd-gallery-wrap">
+    <div id="pd-gallery" class="pd-gallery"></div>
+  </div>
+
+  <!-- CONTENIDO -->
+  <div class="pd-content">
+
+    <!-- COLUMNA IZQUIERDA -->
+    <div class="pd-left">
+      <div class="pd-header">
+        <span id="pd-badge" class="pc-badge"></span>
+        <h1 id="pd-title" class="pd-property-title"></h1>
+        <div id="pd-loc-row" class="pd-loc-row"></div>
+      </div>
+
+      <div id="pd-specs-row" class="pd-specs-row"></div>
+
+      <div id="pd-desc-section" class="pd-section">
+        <div class="pd-section-title">Descripción</div>
+        <p id="pd-desc-text" class="pd-desc-text"></p>
+      </div>
+
+      <div id="pd-map-section" class="pd-section">
+        <div class="pd-section-title">Ubicación</div>
+        <div id="pd-map-content"></div>
+      </div>
+
+      <div id="pd-codigo" class="pd-codigo-tag"></div>
+    </div>
+
+    <!-- COLUMNA DERECHA -->
+    <div class="pd-right">
+      <div class="pd-contact-card">
+        <div class="pd-price-label">Precio</div>
+        <div id="pd-price" class="pd-price-val"></div>
+
+        <div id="pd-form-success" class="pd-form-success">
+          ✓ Mensaje guardado. Nos pondremos en contacto pronto.
+        </div>
+
+        <form id="pd-form" class="pd-form">
+          <input type="text"  id="pd-nombre"   placeholder="Nombre *"   required />
+          <input type="tel"   id="pd-telefono" placeholder="Teléfono *" required />
+          <input type="email" id="pd-email"    placeholder="Email *"    required />
+          <textarea id="pd-msg" rows="4"></textarea>
+          <button type="submit" class="pd-btn-submit">Contactar</button>
+        </form>
+
+        <a id="pd-wa-btn" href="#" class="pd-btn-wa-big" target="_blank" rel="noopener">
+          <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+          Contactar por WhatsApp
+        </a>
+
+        <p class="pd-form-terms">Al enviar estás aceptando los Términos y Condiciones.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- LIGHTBOX -->
+  <div id="pd-lightbox" class="pd-lightbox">
+    <button class="pd-lb-close" onclick="closeLightbox()">✕</button>
+    <button class="pd-lb-nav pd-lb-prev" onclick="lbPrev()">
+      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <div class="pd-lb-img-wrap">
+      <img id="pd-lb-img" src="" alt="Foto de la propiedad" />
+    </div>
+    <button class="pd-lb-nav pd-lb-next" onclick="lbNext()">
+      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+    <div id="pd-lb-count" class="pd-lb-count">1 / 1</div>
+  </div>
+
+  <div id="pd-toast"></div>
+
+  <script src="propiedad.js"></script>
+</body>
+</html>
