@@ -8,6 +8,41 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ═══ MODAL MEJORADO ═══ */
+    .prop-modal { max-width: 920px !important; width: 92vw !important; padding: 0 !important; overflow: hidden; border-radius: 18px !important; }
+    .pm-layout { display: grid; grid-template-columns: 1fr 1fr; min-height: 520px; }
+    .pm-img-panel { position: relative; overflow: hidden; }
+    .pm-img-panel img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s ease; }
+    .pm-img-panel:hover img { transform: scale(1.04); }
+    .pm-img-overlay { position: absolute; top: 16px; left: 16px; }
+    .pm-info-panel { display: flex; flex-direction: column; padding: 36px 32px 32px; background: var(--surface, #1a1a1a); overflow-y: auto; max-height: 90vh; }
+    .pm-info-top { margin-bottom: 24px; }
+    .pm-price { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--gold, #c9a96e); line-height: 1.1; margin-bottom: 8px; }
+    .pm-title { font-size: 1.15rem; font-weight: 600; color: var(--text, #fff); margin-bottom: 10px; line-height: 1.4; }
+    .pm-loc { display: flex; align-items: center; gap: 6px; font-size: .85rem; color: var(--text-muted, #aaa); }
+    .pm-stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 22px; }
+    .pm-stat-box { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08); border-radius: 12px; padding: 12px 8px; display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; }
+    .pm-stat-box svg { color: var(--gold, #c9a96e); opacity: .8; margin-bottom: 2px; }
+    .pm-stat-n { font-size: 1.1rem; font-weight: 700; color: var(--text, #fff); line-height: 1; }
+    .pm-stat-l { font-size: .7rem; color: var(--text-muted, #aaa); text-transform: uppercase; letter-spacing: .05em; }
+    .pm-desc { font-size: .88rem; color: var(--text-muted, #bbb); line-height: 1.7; margin-bottom: 24px; flex: 1; }
+    .pm-wa-btn { display: flex; align-items: center; justify-content: center; gap: 10px; background: #25d366; color: #fff; font-weight: 600; font-size: .95rem; padding: 14px 20px; border-radius: 12px; text-decoration: none; transition: background .2s, transform .15s; margin-top: auto; }
+    .pm-wa-btn:hover { background: #1ebe5d; transform: translateY(-1px); }
+    @media (max-width: 680px) {
+      .pm-layout { grid-template-columns: 1fr; }
+      .pm-img-panel { height: 240px; }
+      .pm-info-panel { padding: 24px 20px 24px; }
+      .pm-stats-row { grid-template-columns: repeat(2, 1fr); }
+      .pm-price { font-size: 1.6rem; }
+    }
+
+    /* ═══ FOOTER VERTEX ═══ */
+    .footer-vertex { display: inline-flex; align-items: center; gap: 6px; color: rgba(255,255,255,.45); font-size: .78rem; text-decoration: none; transition: color .2s; letter-spacing: .02em; }
+    .footer-vertex svg { opacity: .7; transition: opacity .2s; }
+    .footer-vertex:hover { color: var(--gold, #c9a96e); }
+    .footer-vertex:hover svg { opacity: 1; }
+  </style>
 </head>
 <body>
 
@@ -24,10 +59,14 @@
   <!-- ═══ NAVBAR ═══ -->
   <header id="navbar">
     <div class="nav-inner">
-      <a href="#" class="nav-logo">
-        <span class="logo-mark">CC</span>
+      <a href="#" class="nav-logo" onclick="document.getElementById('logo-upload').click();return false;" title="Clic para cambiar el logo">
+        <span class="logo-mark" id="logo-mark">
+          <img id="logo-img" src="" alt="Logo" style="display:none;height:36px;width:auto;border-radius:4px;object-fit:contain;" />
+          <span id="logo-cc">CC</span>
+        </span>
         <span class="logo-text">Cristian Caffer</span>
       </a>
+      <input type="file" id="logo-upload" accept="image/*" style="display:none" onchange="handleLogoUpload(event)" />
       <nav class="nav-links">
         <a href="#propiedades">Propiedades</a>
         <a href="#nosotros">Nosotros</a>
@@ -74,7 +113,6 @@
         Más de 15 años conectando familias con su propiedad ideal.<br>
         Compra, venta y alquiler en Balnearia y la región.
       </p>
-
     </div>
 
     <!-- Stats ticker -->
@@ -366,7 +404,7 @@
       <div class="contact-left reveal-up">
         <div class="section-eyebrow light">Contacto</div>
         <h2 class="section-title light">Hablemos <em>hoy</em></h2>
-        <p class="section-sub light">Completá el formulario y nos ponemos en contacto en menos de 24 horas. Sin compromiso.</p>
+        <p class="section-sub light">Completá el formulario y te redirigimos a WhatsApp para hablar directo con nosotros.</p>
 
         <div class="contact-details">
           <a href="https://maps.google.com/?q=Mar+Chiquita+196+Balnearia+Cordoba" target="_blank" class="cd-item">
@@ -387,13 +425,17 @@
               <span class="cd-value">03563 43-0290</span>
             </div>
           </a>
-          <a href="/cdn-cgi/l/email-protection#a0c9cec6cfe0c3d2c9d3d4c9c1cec3c1c6c6c5d28ec3cfcd8ec1d2" class="cd-item">
+          <a href="mailto:info@cristiancaffer.com.ar" class="cd-item">
             <div class="cd-icon">
               <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 7L2 7"/></svg>
             </div>
             <div>
               <span class="cd-label">Email</span>
+<<<<<<< Updated upstream
               <span class="cd-value"><span class="__cf_email__" data-cfemail="274e4941486744554e54534e46494446414142550944484a094655">email@gmail.com</span></span>
+=======
+              <span class="cd-value">info@cristiancaffer.com.ar</span>
+>>>>>>> Stashed changes
             </div>
           </a>
           <div class="cd-item">
@@ -453,12 +495,12 @@
             <textarea placeholder="Contanos qué necesitás o en qué podemos ayudarte..."></textarea>
           </div>
           <button type="submit" class="cf-submit">
-            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-            Enviar consulta
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Enviar por WhatsApp
           </button>
           <div class="cf-success hidden" id="cf-success">
             <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-            ¡Consulta enviada! Te contactamos en menos de 24 horas.
+            ¡Consulta enviada! Abriendo WhatsApp...
           </div>
         </form>
       </div>
@@ -469,8 +511,11 @@
   <footer id="footer">
     <div class="footer-top">
       <div class="footer-brand">
-        <div class="footer-logo">
-          <span class="logo-mark">CC</span>
+        <div class="footer-logo" onclick="document.getElementById('logo-upload').click()" style="cursor:pointer" title="Clic para cambiar el logo">
+          <span class="logo-mark">
+            <img id="footer-logo-img" src="" alt="Logo" style="display:none;height:30px;width:auto;border-radius:4px;object-fit:contain;" />
+            <span id="footer-logo-cc">CC</span>
+          </span>
           <span class="logo-text">Cristian Caffer</span>
         </div>
         <p>Agencia inmobiliaria familiar con más de 15 años de experiencia en Balnearia, Córdoba. Compra, venta y alquiler de propiedades.</p>
@@ -503,16 +548,31 @@
         <a href="#contacto">Vender mi propiedad</a>
       </div>
       <div class="footer-contact-col">
-        <h4>Contacto</h4>
-        <p>Mar Chiquita 196<br>Balnearia, Córdoba X5141</p>
-        <p><a href="tel:035634330290">03563 43-0290</a></p>
-        <p><a href="/cdn-cgi/l/email-protection#91f8fff7fed1f2e3f8e2e5f8f0fff2f0f7f7f4e3bff2fefcbff0e3"><span class="__cf_email__" data-cfemail="036a6d656c4360716a70776a626d6062656566712d606c6e2d6271">[email&#160;protected]</span></a></p>
-        <p class="footer-hours">Lun–Vie: 8–18 hs · Sáb: 9–13 hs</p>
-      </div>
+  <h4>Contacto</h4>
+  <p>
+    <a href="https://maps.google.com/?q=Mar+Chiquita+196+Balnearia+Cordoba" target="_blank" rel="noopener">
+      Mar Chiquita 196<br>Balnearia, Córdoba X5141
+    </a>
+  </p>
+  <p>
+    <a href="https://wa.me/543563430290?text=Hola!%20Quiero%20consultar%20sobre%20una%20propiedad." target="_blank" rel="noopener">
+      03563 43-0290
+    </a>
+  </p>
+  <p>
+    <a href="mailto:info@cristiancaffer.com.ar">
+      info@cristiancaffer.com.ar
+    </a>
+  </p>
+  <p class="footer-hours">Lun–Vie: 8–18 hs · Sáb: 9–13 hs</p>
+</div>
     </div>
     <div class="footer-bottom">
-      <span>© 2025 Cristian Caffer Inmobiliaria · Todos los derechos reservados · Balnearia, Córdoba</span>
-      <span>Matrícula CUCICBA N° 0000 · Agencia habilitada</span>
+      <span>© 2026 Inmobiliaria Almada</span>
+      <a href="https://www.instagram.com/vertexdev.ar/" target="_blank" rel="noopener" class="footer-vertex">
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        Desarrollado por Vertex
+      </a>
     </div>
   </footer>
 
