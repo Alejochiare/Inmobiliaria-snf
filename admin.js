@@ -15,19 +15,15 @@ const DEFAULT_PROPS = [
   { id:6, title:'Local comercial en planta baja', price:'$55.000 / mes', op:'alquiler', loc:'Av. Colón, Balnearia', beds:0, baths:1, m2:'80', img:'https://images.unsplash.com/photo-1497366216548-37526070297c?w=700&q=80', desc:'Local comercial en excelente ubicación sobre la avenida principal. Amplio salón, baño y depósito.', status:'reserved' },
 ];
 
-const STORAGE_KEY  = 'cc4_props';
-const MESSAGES_KEY = 'cc4_messages';
-const ADMIN_PASS   = 'admin123';
+const STORAGE_KEY = 'cc4_props';
+const ADMIN_PASS  = 'admin123';
 const FALLBACK_IMG = 'https://images.unsplash.com/photo-1560185893-a55cbc8c57e8?w=700&q=80';
 
-let props    = loadProps();
-let messages = loadMessages();
+let props = loadProps();
 
-function loadProps()    { try { return JSON.parse(localStorage.getItem(STORAGE_KEY))  || [...DEFAULT_PROPS]; } catch { return [...DEFAULT_PROPS]; } }
-function loadMessages() { try { return JSON.parse(localStorage.getItem(MESSAGES_KEY)) || []; } catch { return []; } }
-function saveProps()    { localStorage.setItem(STORAGE_KEY,  JSON.stringify(props)); }
-function saveMessages() { localStorage.setItem(MESSAGES_KEY, JSON.stringify(messages)); }
-function nextId()       { return props.length ? Math.max(...props.map(p => p.id)) + 1 : 1; }
+function loadProps() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [...DEFAULT_PROPS]; } catch { return [...DEFAULT_PROPS]; } }
+function saveProps()  { localStorage.setItem(STORAGE_KEY, JSON.stringify(props)); }
+function nextId()     { return props.length ? Math.max(...props.map(p => p.id)) + 1 : 1; }
 function statusLabel(s) { return { active:'Activa', reserved:'Reservada', sold:'Vendida' }[s] || s; }
 
 /* ─── CLOCK ─── */
@@ -78,25 +74,15 @@ document.querySelectorAll('.ap-nav-btn').forEach(btn => {
 function switchTab(name) {
   document.querySelectorAll('.ap-nav-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === name));
   document.querySelectorAll('.ap-tab').forEach(t => t.classList.toggle('active', t.id === 'tab-' + name));
-  const titles = { dashboard:'Dashboard', properties:'Gestión de Propiedades', messages:'Consultas recibidas', settings:'Configuración' };
+  const titles = { dashboard:'Dashboard', properties:'Gestión de Propiedades', settings:'Configuración' };
   document.getElementById('ap-page-title').textContent = titles[name] || name;
 }
 
 /* ─── REFRESH ─── */
 function refreshAdmin() {
-  props    = loadProps();
-  messages = loadMessages();
+  props = loadProps();
   renderDashboard();
   renderPropTable();
-  renderMessages();
-  updateBadge();
-}
-
-function updateBadge() {
-  const unread = messages.filter(m => !m.read).length;
-  const badge  = document.getElementById('ap-badge');
-  badge.textContent  = unread;
-  badge.style.display = unread > 0 ? 'flex' : 'none';
 }
 
 /* ─── DASHBOARD ─── */
@@ -104,7 +90,6 @@ function renderDashboard() {
   const active   = props.filter(p => p.status === 'active').length;
   const venta    = props.filter(p => p.op === 'venta').length;
   const alquiler = props.filter(p => p.op === 'alquiler').length;
-  const unread   = messages.filter(m => !m.read).length;
 
   document.getElementById('ap-stats-grid').innerHTML = `
     <div class="ap-stat-card">
@@ -132,15 +117,6 @@ function renderDashboard() {
       <div class="asc-n">${venta + alquiler}</div>
       <div class="asc-l">Venta + Alquiler</div>
     </div>
-    <div class="ap-stat-card">
-      <div class="asc-top">
-        <div></div>
-        <svg class="asc-icon" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-      </div>
-      <div class="asc-n">${messages.length}</div>
-      <div class="asc-l">Consultas</div>
-      ${unread > 0 ? `<div class="asc-delta" style="color:var(--gold)">★ ${unread} sin leer</div>` : ''}
-    </div>
   `;
 
   // Recent props
@@ -157,26 +133,6 @@ function renderDashboard() {
         </div>
       `).join('')
     : '<div class="msg-empty">Sin propiedades.</div>';
-
-  // Recent messages (dashboard preview)
-  const dashEl = document.getElementById('dash-messages');
-  if (!dashEl) return;
-  const recent3 = messages.slice(0, 3);
-  dashEl.innerHTML = recent3.length
-    ? recent3.map(m => `
-        <div class="msg-item" onclick="switchTab('messages')">
-          <div class="msg-header">
-            <div>
-              <span class="msg-name">${m.name}</span>
-              ${!m.read ? '<span class="msg-unread-dot"></span>' : ''}
-            </div>
-            <span class="msg-date">${m.date}</span>
-          </div>
-          <div class="msg-contact">📧 ${m.email}</div>
-          <div class="msg-text">${m.type}</div>
-        </div>
-      `).join('')
-    : '<div class="msg-empty">No hay consultas aún.</div>';
 }
 
 /* ─── PROP TABLE ─── */
@@ -216,48 +172,6 @@ function renderPropTable() {
       </div>
     `).join('')}
   `;
-}
-
-/* ─── MESSAGES ─── */
-function renderMessages() {
-  const list = document.getElementById('messages-list');
-  if (!messages.length) {
-    list.innerHTML = '<div class="msg-empty">No hay consultas recibidas aún.</div>';
-    return;
-  }
-  list.innerHTML = messages.map(m => `
-    <div class="msg-item" onclick="markRead(${m.id})">
-      <div class="msg-header">
-        <div>
-          <span class="msg-name">${m.name}</span>
-          ${!m.read ? '<span class="msg-unread-dot"></span>' : ''}
-        </div>
-        <span class="msg-date">${m.date}</span>
-      </div>
-      <div class="msg-contact">📧 ${m.email} · 📞 ${m.phone}</div>
-      <div class="msg-text"><strong>Motivo:</strong> ${m.type} | <strong>Presupuesto:</strong> ${m.budget}</div>
-      ${m.message && m.message !== '—' ? `<div class="msg-text" style="margin-top:6px;font-style:italic">"${m.message}"</div>` : ''}
-    </div>
-  `).join('');
-}
-
-function markRead(id) {
-  const m = messages.find(x => x.id === id);
-  if (m && !m.read) {
-    m.read = true;
-    saveMessages();
-    updateBadge();
-    renderMessages();
-    renderDashboard();
-  }
-}
-
-function markAllRead() {
-  messages.forEach(m => m.read = true);
-  saveMessages();
-  updateBadge();
-  renderMessages();
-  showToast('Todas marcadas como leídas ✓', 'success');
 }
 
 /* ─── IMAGE PICKER HELPERS ─── */
@@ -317,7 +231,6 @@ function showAddForm() {
   document.getElementById('pf-submit').textContent  = 'Guardar propiedad';
   document.getElementById('edit-id').value = '';
   document.getElementById('prop-form').reset();
-  // Reset image preview
   const prev = document.getElementById('f-img-preview');
   if (prev) { prev.src = ''; prev.classList.remove('show'); }
   const lbl = document.getElementById('f-img-label');
@@ -336,13 +249,11 @@ document.getElementById('prop-form').addEventListener('submit', async function(e
   const btn = document.getElementById('pf-submit');
   btn.textContent = 'Guardando...'; btn.disabled = true;
 
-  // Handle image: file upload → base64, or keep existing if editing without new file
   const fileInput = document.getElementById('f-img');
   let imgData = '';
   if (fileInput.files && fileInput.files[0]) {
     imgData = await readFileAsBase64(fileInput.files[0]);
   } else if (eid) {
-    // Keep existing image when editing without uploading new one
     const existing = props.find(p => p.id === eid);
     imgData = existing ? (existing.img || '') : '';
   }
@@ -385,7 +296,6 @@ function startEdit(id) {
   document.getElementById('f-m2').value     = p.m2;
   document.getElementById('f-desc').value   = p.desc || '';
   document.getElementById('f-status').value = p.status;
-  // Show existing image preview
   const prev = document.getElementById('f-img-preview');
   const lbl  = document.getElementById('f-img-label');
   if (p.img) {
@@ -395,7 +305,6 @@ function startEdit(id) {
     prev.src = ''; prev.classList.remove('show');
     lbl.textContent = 'Seleccionar imagen desde la PC...';
   }
-  // Reset file input
   document.getElementById('f-img').value = '';
   document.getElementById('pfc-title').textContent = 'Editar propiedad';
   document.getElementById('pf-submit').textContent = 'Guardar cambios';
@@ -415,12 +324,6 @@ function resetProps() {
   props = [...DEFAULT_PROPS];
   saveProps(); refreshAdmin();
   showToast('Propiedades reseteadas ✓', 'gold');
-}
-
-function resetMessages() {
-  messages = [];
-  saveMessages(); refreshAdmin();
-  showToast('Consultas eliminadas', 'error');
 }
 
 /* ─── TOAST ─── */

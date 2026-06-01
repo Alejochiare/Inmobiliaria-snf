@@ -14,8 +14,8 @@ const DEFAULT_PROPS = [
   { id:6, title:'Local comercial en planta baja', price:'$55.000 / mes', op:'alquiler', loc:'Av. Colón, Balnearia', beds:0, baths:1, m2:'80', img:'https://images.unsplash.com/photo-1497366216548-37526070297c?w=700&q=80', desc:'Local comercial en excelente ubicación sobre avenida principal.', status:'reserved' },
 ];
 const STORAGE_KEY  = 'cc4_props';
-const MESSAGES_KEY = 'cc4_messages';
 const FALLBACK_IMG = 'https://images.unsplash.com/photo-1560185893-a55cbc8c57e8?w=700&q=80';
+const WA_NUMBER    = '543576474062'; // número WhatsApp destino
 
 function loadProps() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [...DEFAULT_PROPS]; } catch { return [...DEFAULT_PROPS]; } }
 
@@ -125,16 +125,46 @@ window.setFilter=function(f){ activeFilter=f; document.querySelectorAll('.pf-btn
 /* FAV */
 function toggleFav(btn){ const svg=btn.querySelector('svg'); const isFav=svg.style.fill==='rgb(201, 169, 110)'; svg.style.fill=isFav?'none':'rgb(201, 169, 110)'; svg.style.stroke=isFav?'':'rgb(201, 169, 110)'; showToast(isFav?'Eliminado de favoritos':'Guardado en favoritos ♥',isFav?'':'gold'); }
 
-/* CONTACT FORM */
-document.getElementById('contact-form').addEventListener('submit',function(e){
+/* ─── CONTACT FORM → WHATSAPP ─── */
+document.getElementById('contact-form').addEventListener('submit', function(e) {
   e.preventDefault();
-  const btn=this.querySelector('.cf-submit'); btn.textContent='Enviando...'; btn.disabled=true;
-  const inp=this.querySelectorAll('input,select,textarea');
-  const msg={ id:Date.now(), name:inp[0].value||'Sin nombre', phone:inp[1].value||'—', email:inp[2].value||'—', type:inp[3].value||'—', budget:inp[4].value||'—', message:inp[5].value||'—', date:new Date().toLocaleDateString('es-AR',{day:'2-digit',month:'2-digit',year:'numeric'}), read:false };
-  const existing=(() => { try { return JSON.parse(localStorage.getItem(MESSAGES_KEY))||[]; } catch { return []; } })();
-  existing.unshift(msg);
-  localStorage.setItem(MESSAGES_KEY, JSON.stringify(existing));
-  setTimeout(()=>{ document.getElementById('cf-success').classList.remove('hidden'); this.reset(); btn.innerHTML=`<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Enviar consulta`; btn.disabled=false; setTimeout(()=>document.getElementById('cf-success').classList.add('hidden'),6000); },1200);
+
+  const btn = this.querySelector('.cf-submit');
+  btn.textContent = 'Redirigiendo...';
+  btn.disabled = true;
+
+  const inp = this.querySelectorAll('input, select, textarea');
+  const nombre   = inp[0].value.trim() || 'Sin nombre';
+  const telefono = inp[1].value.trim() || 'No indicado';
+  const email    = inp[2].value.trim() || 'No indicado';
+  const motivo   = inp[3].value       || 'No indicado';
+  const presup   = inp[4].value       || 'No indicado';
+  const mensaje  = inp[5].value.trim() || '';
+
+  // Armar texto del mensaje para WhatsApp
+  let texto = `🏠 *Nueva consulta — Cristian Caffer Inmobiliaria*\n\n`;
+  texto += `👤 *Nombre:* ${nombre}\n`;
+  texto += `📞 *Teléfono:* ${telefono}\n`;
+  texto += `📧 *Email:* ${email}\n`;
+  texto += `📋 *Motivo:* ${motivo}\n`;
+  texto += `💰 *Presupuesto:* ${presup}\n`;
+  if (mensaje) {
+    texto += `\n💬 *Mensaje:*\n${mensaje}`;
+  }
+
+  const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(texto)}`;
+
+  setTimeout(() => {
+    // Mostrar mensaje de éxito
+    document.getElementById('cf-success').classList.remove('hidden');
+    this.reset();
+    btn.innerHTML = `<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Enviar consulta`;
+    btn.disabled = false;
+    setTimeout(() => document.getElementById('cf-success').classList.add('hidden'), 6000);
+
+    // Abrir WhatsApp
+    window.open(url, '_blank');
+  }, 800);
 });
 
 /* FOOTER LINKS */
@@ -154,16 +184,8 @@ function showToast(msg,type=''){ const t=document.getElementById('toast'); t.tex
 
 /* SITE IMAGES FROM ADMIN */
 function loadSiteImages() {
-  // Hero background
   const heroBg = localStorage.getItem('cc4_hero_bg');
-  if (heroBg) {
-    const img = document.querySelector('.hero-bg-img');
-    if (img) img.src = heroBg;
-  }
-  // About main photo
+  if (heroBg) { const img = document.querySelector('.hero-bg-img'); if (img) img.src = heroBg; }
   const aboutImg = localStorage.getItem('cc4_about_img');
-  if (aboutImg) {
-    const img = document.querySelector('.about-img-main img');
-    if (img) img.src = aboutImg;
-  }
+  if (aboutImg) { const img = document.querySelector('.about-img-main img'); if (img) img.src = aboutImg; }
 }
