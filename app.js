@@ -1,6 +1,5 @@
 /* ═══════════════════════════════════════
    CRISTIAN CAFFER — APP.JS
-   Sitio público — sin lógica de admin
 ═══════════════════════════════════════ */
 
 'use strict';
@@ -13,13 +12,11 @@ const DEFAULT_PROPS = [
   { id:5, title:'Chalet en barrio residencial', price:'$35.000.000', op:'venta', loc:'Balnearia Sur, Córdoba', beds:3, baths:1, m2:'140', img:'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=700&q=80', desc:'Encantador chalet en barrio tranquilo. Jardín con plantas frutales y garaje.', status:'active' },
   { id:6, title:'Local comercial en planta baja', price:'$55.000 / mes', op:'alquiler', loc:'Av. Colón, Balnearia', beds:0, baths:1, m2:'80', img:'https://images.unsplash.com/photo-1497366216548-37526070297c?w=700&q=80', desc:'Local comercial en excelente ubicación sobre avenida principal.', status:'reserved' },
 ];
+
 const STORAGE_KEY  = 'cc4_props';
+const MESSAGES_KEY = 'cc4_messages';
 const FALLBACK_IMG = 'https://images.unsplash.com/photo-1560185893-a55cbc8c57e8?w=700&q=80';
-<<<<<<< Updated upstream
-const WA_NUMBER    = '543576474062'; // número WhatsApp destino
-=======
 const WA_NUMBER    = '543563430290';
->>>>>>> Stashed changes
 
 function loadProps() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [...DEFAULT_PROPS]; } catch { return [...DEFAULT_PROPS]; } }
 
@@ -50,7 +47,6 @@ function applyLogo(src) {
   if (ftImg)  { ftImg.src  = src; ftImg.style.display  = 'inline-block'; if (ftCC) ftCC.style.display  = 'none'; }
 }
 
-// Cargar logo guardado al iniciar
 (function loadSavedLogo() {
   const saved = localStorage.getItem('cc4_logo');
   if (saved) applyLogo(saved);
@@ -156,7 +152,6 @@ function openPropModal(id) {
             ${p.loc}
           </div>
         </div>
-
         <div class="pm-stats-row">
           ${p.beds > 0 ? `
           <div class="pm-stat-box">
@@ -182,9 +177,7 @@ function openPropModal(id) {
             <span class="pm-stat-l">Tipo</span>
           </div>
         </div>
-
         ${p.desc ? `<div class="pm-desc">${p.desc}</div>` : ''}
-
         <a href="${waLink}" target="_blank" class="pm-wa-btn">
           <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
           Consultar por WhatsApp
@@ -207,8 +200,7 @@ window.setFilter = function (f) { activeFilter = f; document.querySelectorAll('.
 /* ═══ FAV ═══ */
 function toggleFav(btn) { const svg = btn.querySelector('svg'); const isFav = svg.style.fill === 'rgb(201, 169, 110)'; svg.style.fill = isFav ? 'none' : 'rgb(201, 169, 110)'; svg.style.stroke = isFav ? '' : 'rgb(201, 169, 110)'; showToast(isFav ? 'Eliminado de favoritos' : 'Guardado en favoritos ♥', isFav ? '' : 'gold'); }
 
-<<<<<<< Updated upstream
-/* ─── CONTACT FORM → WHATSAPP ─── */
+/* ═══ CONTACT FORM — redirige a WhatsApp ═══ */
 document.getElementById('contact-form').addEventListener('submit', function(e) {
   e.preventDefault();
 
@@ -224,44 +216,10 @@ document.getElementById('contact-form').addEventListener('submit', function(e) {
   const presup   = inp[4].value       || 'No indicado';
   const mensaje  = inp[5].value.trim() || '';
 
-  // Armar texto del mensaje para WhatsApp
-  let texto = `🏠 *Nueva consulta — Cristian Caffer Inmobiliaria*\n\n`;
-  texto += `👤 *Nombre:* ${nombre}\n`;
-  texto += `📞 *Teléfono:* ${telefono}\n`;
-  texto += `📧 *Email:* ${email}\n`;
-  texto += `📋 *Motivo:* ${motivo}\n`;
-  texto += `💰 *Presupuesto:* ${presup}\n`;
-  if (mensaje) {
-    texto += `\n💬 *Mensaje:*\n${mensaje}`;
-  }
-
-  const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(texto)}`;
-=======
-/* ═══ CONTACT FORM — redirige a WhatsApp ═══ */
-document.getElementById('contact-form').addEventListener('submit', function (e) {
-  e.preventDefault();
-
-  const btn = this.querySelector('.cf-submit');
-  btn.textContent = 'Preparando mensaje...';
-  btn.disabled = true;
-
-  const inp = this.querySelectorAll('input,select,textarea');
-  const nombre   = inp[0].value || '—';
-  const telefono = inp[1].value || '—';
-  const email    = inp[2].value || '—';
-  const motivo   = inp[3].value || '—';
-  const presup   = inp[4].value || '—';
-  const mensaje  = inp[5].value || '—';
-
   // Guardar en localStorage
   const msg = {
     id: Date.now(),
-    name: nombre,
-    phone: telefono,
-    email,
-    type: motivo,
-    budget: presup,
-    message: mensaje,
+    name: nombre, phone: telefono, email, type: motivo, budget: presup, message: mensaje,
     date: new Date().toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' }),
     read: false
   };
@@ -269,43 +227,29 @@ document.getElementById('contact-form').addEventListener('submit', function (e) 
   existing.unshift(msg);
   localStorage.setItem(MESSAGES_KEY, JSON.stringify(existing));
 
-  // Armar mensaje para WhatsApp
-  const waText = encodeURIComponent(
-    `📋 *Nueva consulta desde la web*\n\n` +
-    `👤 Nombre: ${nombre}\n` +
-    `📞 Teléfono: ${telefono}\n` +
-    `📧 Email: ${email}\n` +
-    `🏠 Motivo: ${motivo}\n` +
-    `💰 Presupuesto: ${presup}\n` +
-    `💬 Mensaje: ${mensaje}`
-  );
->>>>>>> Stashed changes
+  // Armar mensaje WhatsApp
+  let texto = `🏠 *Nueva consulta — Cristian Caffer Inmobiliaria*\n\n`;
+  texto += `👤 *Nombre:* ${nombre}\n`;
+  texto += `📞 *Teléfono:* ${telefono}\n`;
+  texto += `📧 *Email:* ${email}\n`;
+  texto += `📋 *Motivo:* ${motivo}\n`;
+  texto += `💰 *Presupuesto:* ${presup}\n`;
+  if (mensaje) texto += `\n💬 *Mensaje:*\n${mensaje}`;
+
+  const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(texto)}`;
 
   setTimeout(() => {
-    // Mostrar mensaje de éxito
     document.getElementById('cf-success').classList.remove('hidden');
     this.reset();
-<<<<<<< Updated upstream
-    btn.innerHTML = `<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Enviar consulta`;
-    btn.disabled = false;
-    setTimeout(() => document.getElementById('cf-success').classList.add('hidden'), 6000);
-
-    // Abrir WhatsApp
-    window.open(url, '_blank');
-  }, 800);
-=======
     btn.innerHTML = `<svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> Enviar por WhatsApp`;
     btn.disabled = false;
     setTimeout(() => document.getElementById('cf-success').classList.add('hidden'), 6000);
-
-    // Abrir WhatsApp en pestaña nueva
-    window.open(`https://wa.me/${WA_NUMBER}?text=${waText}`, '_blank');
-  }, 1200);
->>>>>>> Stashed changes
+    window.open(url, '_blank');
+  }, 800);
 });
 
 /* ═══ FOOTER LINKS ═══ */
-document.querySelectorAll('.footer-links a').forEach(a => { a.addEventListener('click', function (e) { const s = this.getAttribute('href'); if (s && s.startsWith('#')) { e.preventDefault(); document.querySelector(s)?.scrollIntoView({ behavior: 'smooth' }); } }); });
+document.querySelectorAll('.footer-links a').forEach(a => { a.addEventListener('click', function(e) { const s = this.getAttribute('href'); if (s && s.startsWith('#')) { e.preventDefault(); document.querySelector(s)?.scrollIntoView({ behavior: 'smooth' }); } }); });
 
 /* ═══ TOAST ═══ */
 let toastTimer;
@@ -320,21 +264,9 @@ function loadSiteImages() {
 }
 
 /* ═══ INIT ═══ */
-(function () {
+(function() {
   renderProps();
   loadSiteImages();
   const wa = document.getElementById('wa-float'); if (wa) wa.style.cssText += ';opacity:0;transition:opacity .3s';
   addHover('a,button,.prop-card,.testi-card,.about-feature,.cd-item,.pt-step');
-<<<<<<< Updated upstream
 })();
-
-/* SITE IMAGES FROM ADMIN */
-function loadSiteImages() {
-  const heroBg = localStorage.getItem('cc4_hero_bg');
-  if (heroBg) { const img = document.querySelector('.hero-bg-img'); if (img) img.src = heroBg; }
-  const aboutImg = localStorage.getItem('cc4_about_img');
-  if (aboutImg) { const img = document.querySelector('.about-img-main img'); if (img) img.src = aboutImg; }
-}
-=======
-})();
->>>>>>> Stashed changes
